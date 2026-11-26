@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loganathan S Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: sticky bar with scroll progress, a hero where a live node web (Angular > REST > Spring Boot > JDBC > MySQL) sits beside the name, then About, Skills, Project, Education, Contact. One deliberate look: near-black with red. */
+:root {
+  --bg: #020202;
+  --panel: #0b0708;
+  --maroon: #51181c;
+  --red: #9e0b0f;
+  --red-soft: #b54d4d;
+  --red-hot: #e0565b;
+  --text: #eeeded;
+  --muted: #a19d9d;
+  --haze: #847583;
+  --hair: rgba(238, 237, 237, 0.12);
+  --font-display: "Bebas Neue", Impact, "Arial Narrow", sans-serif;
+  --font-body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  padding-block: 0 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--bg); z-index: 60; }
+.wrap { max-width: 1120px; margin-inline: auto; }
+h1, h2, h3, p { margin: 0; }
+h1, h2 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em; text-wrap: balance; }
+a { color: var(--red-hot); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--red-hot); outline-offset: 3px; border-radius: 4px; }
+.label { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red-hot); }
+
+/* bar */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 14px; background: rgba(2, 2, 2, 0.86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--hair); }
+.bar::after { content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: calc(var(--p, 0) * 100%); background: var(--red-hot); }
+.brand { font-family: var(--font-display); font-size: 26px; letter-spacing: 0.05em; line-height: 1; }
+.brand span { color: var(--red-hot); }
+.bar nav { display: flex; gap: 22px; flex-wrap: wrap; }
+.bar nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; }
+.bar nav a:hover { color: var(--text); }
+
+/* hero */
+.hero { position: relative; padding-block: 72px 104px; overflow: hidden; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: 0; background: radial-gradient(60% 70% at 80% 40%, rgba(158, 11, 15, 0.26), transparent 70%); pointer-events: none; }
+.hero-copy { position: relative; z-index: 2; max-width: 600px; }
+.hero h1 { font-size: clamp(4rem, 13vw, 8.6rem); line-height: 0.9; margin-top: 16px; }
+.hero h1 em { font-style: normal; color: var(--red-hot); }
+.typed { margin-top: 18px; font-family: var(--font-mono); font-size: 16px; color: var(--text); min-height: 1.6em; }
+.typed::after { content: "▍"; color: var(--red-hot); margin-left: 2px; animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.lede { margin-top: 18px; color: var(--muted); font-size: 18px; max-width: 50ch; }
+.actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-block; padding: 13px 24px; border-radius: 4px; font-weight: 700; font-size: 15px; text-decoration: none; border: 1px solid var(--red); transition: transform 0.2s, background 0.2s; }
+.btn.fill { background: var(--red); color: var(--text); }
+.btn.line { color: var(--text); background: transparent; border-color: var(--haze); }
+.btn:hover { transform: translateY(-2px); }
+.btn.fill:hover { background: #b50d12; }
+
+/* sections */
+section { padding-block: 72px; border-top: 1px solid var(--hair); }
+.head { display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
+.head h2 { font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1; }
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: 40px; align-items: start; }
+.about-grid p { color: var(--text); max-width: 60ch; }
+.about-grid p + p { margin-top: 16px; color: var(--muted); }
+.facts { display: grid; gap: 0; border: 1px solid var(--hair); border-radius: 8px; background: var(--panel); }
+.facts div { padding: 16px 20px; border-bottom: 1px solid var(--hair); min-width: 0; }
+.facts div:last-child { border-bottom: 0; }
+.facts small { display: block; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--haze); }
+.facts b { font-weight: 600; overflow-wrap: anywhere; }
+
+/* tilt cards */
+.tilt { position: relative; background: var(--panel); border: 1px solid var(--hair); border-radius: 10px; transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.18s ease-out, border-color 0.2s; will-change: transform; }
+.tilt::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.2s; background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(158, 11, 15, 0.38), transparent 70%); }
+.tilt:hover { border-color: var(--red); }
+.tilt:hover::after { opacity: 1; }
+
+.skills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.skill { padding: 22px; }
+.skill h3 { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red-hot); margin-bottom: 14px; }
+.skill ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.skill li { font-weight: 600; padding-bottom: 8px; border-bottom: 1px solid var(--hair); }
+.skill li:last-child { border-bottom: 0; padding-bottom: 0; }
+
+.project { padding: 36px; }
+.project h3 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: 0.02em; text-transform: uppercase; line-height: 1; }
+.project p { margin-top: 14px; color: var(--muted); max-width: 62ch; }
+.flow { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px 8px; align-items: center; }
+.flow span { font-family: var(--font-mono); font-size: 13px; padding: 8px 12px; border: 1px solid var(--maroon); background: rgba(81, 24, 28, 0.35); border-radius: 4px; }
+.flow i { font-style: normal; color: var(--red-hot); font-family: var(--font-mono); }
+.crud { margin-top: 24px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.crud div { border: 1px solid var(--hair); border-radius: 6px; padding: 12px 14px; color: var(--muted); font-size: 14px; }
+.crud b { display: block; font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--red-hot); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
+.tags { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px; }
+.tags span { font-family: var(--font-mono); font-size: 12.5px; padding: 5px 10px; border-radius: 4px; background: var(--maroon); color: var(--text); }
+
+.edu { display: grid; }
+.edu-row { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr); gap: 8px 32px; padding-block: 22px; border-top: 1px solid var(--hair); align-items: baseline; }
+.edu-row:last-child { border-bottom: 1px solid var(--hair); }
+.edu-row .when { font-family: var(--font-mono); font-size: 13px; color: var(--haze); }
+.edu-row strong { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.9rem; letter-spacing: 0.03em; line-height: 1.1; text-transform: uppercase; }
+.edu-row span { color: var(--muted); }
+
+.contact { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 40px; align-items: end; }
+.contact h2 { font-size: clamp(2.6rem, 8vw, 5.4rem); line-height: 0.95; }
+.contact h2 em { font-style: normal; color: var(--red-hot); }
+.contact p { color: var(--muted); }
+.contact .facts { margin-top: 0; }
+
+footer { padding-top: 24px; border-top: 1px solid var(--hair); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; color: var(--haze); font-size: 13px; font-family: var(--font-mono); }
+
+/* reveal: content is visible by default; JS marks only below-the-fold blocks */
+.pre { opacity: 0; transform: translateY(24px); }
+.rv { transition: opacity 0.7s ease, transform 0.7s ease; }
+
+/* custom cursor, fine pointers only */
+.cur-dot, .cur-ring { position: fixed; left: 0; top: 0; z-index: 100; pointer-events: none; border-radius: 50%; display: none; }
+.has-cursor .cur-dot, .has-cursor .cur-ring { display: block; }
+.has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
+.cur-dot { width: 7px; height: 7px; background: var(--red-hot); margin: -3.5px 0 0 -3.5px; }
+.cur-ring { width: 36px; height: 36px; margin: -18px 0 0 -18px; border: 1.5px solid var(--red-hot); transition: width 0.2s, height 0.2s, margin 0.2s, background 0.2s; }
+.cur-ring.big { width: 60px; height: 60px; margin: -30px 0 0 -30px; background: rgba(158, 11, 15, 0.22); }
+
+@media (max-width: 860px) {
+  .hero { padding-block: 48px 300px; }
+  .about-grid, .contact { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .crud { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .edu-row { grid-template-columns: minmax(0, 1fr); }
+  .project { padding: 22px; }
+  section { padding-block: 56px; }
+}
+@media (max-width: 480px) { .skills { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .typed::after { animation: none; }
+  .pre { opacity: 1; transform: none; }
+  .tilt { transition: none; }
+}
+</style>
+
+</head>
+<body>
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<div class="wrap">
+  <header class="bar" id="bar">
+    <div class="brand">Loganathan<span> S</span></div>
+    <nav aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#project">Project</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero" id="hero">
+      <canvas id="web" aria-hidden="true"></canvas>
+      <div class="hero-copy">
+        <span class="label">Fresher · Open to work</span>
+        <h1>Loganathan <em>S</em></h1>
+        <p class="typed" id="typed" aria-live="off">Java Full Stack Developer</p>
+        <p class="lede">I build web apps from the Angular screen down to the MySQL table. Core Java, Spring Boot, REST APIs and a lot of curiosity.</p>
+        <div class="actions">
+          <a class="btn fill" href="#project">View project</a>
+          <a class="btn line" href="#contact">Contact me</a>
+        </div>
+      </div>
+    </div>
+
+    <section id="about">
+      <div class="head rv"><span class="label">About</span><h2>The whole path of a request</h2></div>
+      <div class="about-grid rv">
+        <div>
+          <p>I am a fresher from Perambalur, Tamil Nadu, completing my M.Sc. at Madurai Kamaraj University in 2026. I am looking for my first role as a Java Full Stack Developer.</p>
+          <p>I write Java and Spring Boot back ends, build Angular front ends, design MySQL tables and test every API in Postman. IntelliJ and VS Code are where I spend my time.</p>
+        </div>
+        <div class="facts">
+          <div><small>Based in</small><b>Perambalur, Tamil Nadu</b></div>
+          <div><small>Looking for</small><b>Java Full Stack Developer roles</b></div>
+          <div><small>Languages</small><b>Tamil, English, Telugu</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="head rv"><span class="label">Skills</span><h2>Tools I work with</h2></div>
+      <div class="skills rv">
+        <div class="skill tilt"><h3>Back end</h3><ul><li>Core Java</li><li>Spring Boot</li><li>JDBC</li></ul></div>
+        <div class="skill tilt"><h3>Front end</h3><ul><li>Angular</li><li>HTML5</li><li>CSS3</li><li>JavaScript</li></ul></div>
+        <div class="skill tilt"><h3>Database</h3><ul><li>SQL</li><li>MySQL</li></ul></div>
+        <div class="skill tilt"><h3>Tools</h3><ul><li>Postman</li><li>IntelliJ IDEA</li><li>VS Code</li></ul></div>
+      </div>
+    </section>
+
+    <section id="project">
+      <div class="head rv"><span class="label">Project</span><h2>What I have built</h2></div>
+      <article class="project tilt rv">
+        <h3>Employee Management System</h3>
+        <p>A full stack application for managing employee records. The Angular front end calls a Spring Boot back end through REST APIs, and the data lives in MySQL.</p>
+        <div class="flow" aria-label="Request path">
+          <span>Angular</span><i>→</i><span>REST API</span><i>→</i><span>Spring Boot</span><i>→</i><span>JDBC</span><i>→</i><span>MySQL</span>
+        </div>
+        <div class="crud">
+          <div><b>Create</b>Add an employee</div>
+          <div><b>Read</b>List and view records</div>
+          <div><b>Update</b>Edit employee details</div>
+          <div><b>Delete</b>Remove a record</div>
+        </div>
+        <div class="tags"><span>Java</span><span>Spring Boot</span><span>Angular</span><span>MySQL</span><span>REST APIs</span></div>
+      </article>
+    </section>
+
+    <section id="education">
+      <div class="head rv"><span class="label">Education</span><h2>Where I studied</h2></div>
+      <div class="edu rv">
+        <div class="edu-row"><div class="when">Graduating 2026</div><div><strong>M.Sc.</strong><span>Madurai Kamaraj University</span></div></div>
+        <div class="edu-row"><div class="when">Undergraduate</div><div><strong>B.A. Defence Studies</strong><span>Sree Ramu College of Arts and Science, Pollachi</span></div></div>
+        <div class="edu-row"><div class="when">Higher secondary</div><div><strong>HSC</strong><span>Thanthai-Roever Higher Secondary School, Perambalur</span></div></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="contact rv">
+        <div>
+          <span class="label">Contact</span>
+          <h2 style="margin-top:12px">Let's build <em>something</em> together</h2>
+        </div>
+        <div class="facts">
+          <div><small>Open to</small><b>Java Full Stack Developer roles</b></div>
+          <div><small>Location</small><b>Perambalur, Tamil Nadu, India</b></div>
+          <div><small>Languages</small><b>Tamil, English, Telugu</b></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Loganathan S · Java Full Stack Developer</span>
+    <span>Perambalur, Tamil Nadu</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* scroll progress */
+  var bar = document.getElementById('bar');
+  function progress() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.setProperty('--p', h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0);
+  }
+  window.addEventListener('scroll', progress, { passive: true });
+  progress();
+
+  /* typing line */
+  var typed = document.getElementById('typed');
+  var roles = ['Java Full Stack Developer', 'Spring Boot + Angular', 'REST APIs and MySQL'];
+  if (!reduce) {
+    var ri = 0, ci = 0, del = false;
+    (function tick() {
+      var word = roles[ri];
+      typed.textContent = word.slice(0, ci);
+      var wait = del ? 35 : 70;
+      if (!del && ci === word.length) { del = true; wait = 1600; }
+      else if (del && ci === 0) { del = false; ri = (ri + 1) % roles.length; wait = 350; }
+      else { ci += del ? -1 : 1; }
+      setTimeout(tick, wait);
+    })();
+  }
+
+  /* reveal only blocks that start below the fold */
+  var rv = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    rv.forEach(function (el) {
+      if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('pre'); io.observe(el); }
+    });
+  }
+
+  /* tilt cards */
+  if (fine && !reduce) {
+    document.querySelectorAll('.tilt').forEach(function (c) {
+      c.addEventListener('pointermove', function (e) {
+        var r = c.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        c.style.setProperty('--ry', ((x - 0.5) * 8).toFixed(2) + 'deg');
+        c.style.setProperty('--rx', ((0.5 - y) * 8).toFixed(2) + 'deg');
+        c.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+        c.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+      });
+      c.addEventListener('pointerleave', function () {
+        c.style.setProperty('--rx', '0deg');
+        c.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+
+  /* custom cursor */
+  if (fine && !reduce) {
+    document.documentElement.classList.add('has-cursor');
+    var dot = document.getElementById('curDot'), ring = document.getElementById('curRing');
+    var mx = -100, my = -100, rx = -100, ry = -100;
+    window.addEventListener('pointermove', function (e) { mx = e.clientX; my = e.clientY; dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)'; });
+    document.addEventListener('pointerover', function (e) {
+      ring.classList.toggle('big', !!(e.target.closest && e.target.closest('a, button, .tilt')));
+    });
+    (function follow() {
+      rx += (mx - rx) * 0.2; ry += (my - ry) * 0.2;
+      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+      requestAnimationFrame(follow);
+    })();
+  }
+
+  /* hero node web */
+  var hero = document.getElementById('hero');
+  var cv = document.getElementById('web');
+  var ctx = cv.getContext('2d');
+  var W = 0, H = 0, mobile = false, parts = [], chain = [];
+  var mouse = { x: -999, y: -999 };
+  var names = ['Angular', 'REST API', 'Spring Boot', 'JDBC', 'MySQL'];
+  var deskPos = [[0.66, 0.2], [0.84, 0.36], [0.7, 0.54], [0.88, 0.72], [0.72, 0.88]];
+  var mobPos = [[0.12, 0.76], [0.34, 0.9], [0.5, 0.74], [0.7, 0.9], [0.88, 0.76]];
+
+  function layout() {
+    var r = hero.getBoundingClientRect();
+    W = r.width; H = r.height;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    mobile = W < 860;
+    var pos = mobile ? mobPos : deskPos;
+    chain = names.map(function (n, i) { return { name: n, bx: pos[i][0] * W, by: pos[i][1] * H, ph: i * 1.3, x: 0, y: 0 }; });
+    var count = mobile ? 26 : 48;
+    parts = [];
+    for (var i = 0; i < count; i++) {
+      parts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25 });
+    }
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+    var i, j, a, b, d, link = mobile ? 90 : 120;
+    for (i = 0; i < parts.length; i++) {
+      a = parts[i];
+      if (!reduce) {
+        a.x += a.vx; a.y += a.vy;
+        if (a.x < 0 || a.x > W) a.vx *= -1;
+        if (a.y < 0 || a.y > H) a.vy *= -1;
+      }
+      for (j = i + 1; j < parts.length; j++) {
+        b = parts[j]; d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < link) { ctx.strokeStyle = 'rgba(181,77,77,' + (0.28 * (1 - d / link)).toFixed(3) + ')'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+      }
+      d = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+      if (d < 170) { ctx.strokeStyle = 'rgba(224,86,91,' + (0.7 * (1 - d / 170)).toFixed(3) + ')'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke(); }
+      ctx.fillStyle = 'rgba(238,237,237,0.35)'; ctx.beginPath(); ctx.arc(a.x, a.y, 1.4, 0, 6.2832); ctx.fill();
+    }
+    var sec = t / 1000;
+    for (i = 0; i < chain.length; i++) {
+      a = chain[i];
+      a.x = a.bx + (reduce ? 0 : Math.sin(sec * 0.8 + a.ph) * 6);
+      a.y = a.by + (reduce ? 0 : Math.cos(sec * 0.7 + a.ph) * 6);
+    }
+    ctx.lineWidth = 1.6;
+    for (i = 0; i < chain.length - 1; i++) {
+      a = chain[i]; b = chain[i + 1];
+      ctx.strokeStyle = 'rgba(224,86,91,0.7)'; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      var k = reduce ? 0.5 : ((sec * 0.35 + i * 0.2) % 1);
+      ctx.fillStyle = '#eeeded'; ctx.beginPath(); ctx.arc(a.x + (b.x - a.x) * k, a.y + (b.y - a.y) * k, 2.4, 0, 6.2832); ctx.fill();
+    }
+    ctx.font = '500 12px "JetBrains Mono", monospace';
+    for (i = 0; i < chain.length; i++) {
+      a = chain[i];
+      d = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+      var near = d < 140;
+      ctx.save();
+      ctx.shadowColor = '#9e0b0f'; ctx.shadowBlur = near ? 30 : 16;
+      ctx.fillStyle = near ? '#e0565b' : '#9e0b0f';
+      ctx.beginPath(); ctx.arc(a.x, a.y, near ? 9 : 7, 0, 6.2832); ctx.fill();
+      ctx.restore();
+      ctx.fillStyle = '#eeeded';
+      var right = a.x > W * 0.72;
+      ctx.textAlign = right ? 'right' : 'left';
+      ctx.fillText(a.name, a.x + (right ? -14 : 14), a.y + 4);
+    }
+  }
+
+  var running = false, visible = true;
+  function loop(t) { if (!visible) { running = false; return; } draw(t); requestAnimationFrame(loop); }
+  function start() { if (reduce || running) return; running = true; requestAnimationFrame(loop); }
+
+  layout(); draw(0); start();
+  var rt;
+  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { layout(); draw(0); }, 150); });
+  hero.addEventListener('pointermove', function (e) { var r = hero.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; if (reduce) draw(0); });
+  hero.addEventListener('pointerleave', function () { mouse.x = -999; mouse.y = -999; if (reduce) draw(0); });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) start(); }).observe(hero);
+  }
+})();
+</script>
+</body>
+</html>
